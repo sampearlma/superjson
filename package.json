@@ -16,6 +16,7 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
+    "test:temporal": "node --harmony-temporal ./node_modules/vitest/vitest.mjs run",
     "prepack": "npm run build"
   },
   "prettier": {
