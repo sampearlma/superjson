@@ -29,7 +29,7 @@ describe('stringify & parse', () => {
       output: JSONValue | ((v: JSONValue) => void);
       outputAnnotations?: SuperJSONResult['meta'];
       customExpectations?: (value: any) => void;
-      skipOnNode10?: boolean;
+      skip?: boolean;
       dontExpectEquality?: boolean;
       only?: boolean;
     }
@@ -496,7 +496,7 @@ describe('stringify & parse', () => {
     },
 
     'works for symbols': {
-      skipOnNode10: true,
+      skip: isNode10,
       input: () => {
         const parent = Symbol('Parent');
         const child = Symbol('Child');
@@ -571,7 +571,7 @@ describe('stringify & parse', () => {
     },
 
     'issue #58': {
-      skipOnNode10: true,
+      skip: isNode10,
       input: () => {
         const cool = Symbol('cool');
         SuperJSON.registerSymbol(cool);
@@ -803,14 +803,14 @@ describe('stringify & parse', () => {
       output: expectedOutput,
       outputAnnotations: expectedOutputAnnotations,
       customExpectations,
-      skipOnNode10,
+      skip,
       dontExpectEquality,
       only,
     },
   ] of Object.entries(cases)) {
     let testFunc = test;
 
-    if (skipOnNode10 && isNode10) {
+    if (skip) {
       testFunc = test.skip;
     }
 
