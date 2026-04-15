@@ -130,8 +130,6 @@ export const isZonedDateTime = (
 ): payload is Temporal.ZonedDateTime =>
   getType(payload) === 'Temporal.ZonedDateTime';
 
-// Could slice getType to check just "Temporal" part
-// May include other objects(?)
 export const isTemporal = (payload: any): payload is TemporalTypes =>
   isDuration(payload) ||
   isPlainDate(payload) ||

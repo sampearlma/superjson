@@ -260,13 +260,13 @@ const typedArrayRule = compositeTransformation(
 // Can not define temporalConstructorToName within global scope
 // as Temporal may be undefined (don't introduce breaking changes).
 // So lazily initialize array
-let temporalConstructorToName: Record<string, TemporalConstructor> | undefined;
+let temporalNameToConstructor: Record<string, TemporalConstructor> | undefined;
 const getTemporalConstructors = () => {
-  if (temporalConstructorToName) return temporalConstructorToName;
+  if (temporalNameToConstructor) return temporalNameToConstructor;
   if (typeof Temporal === 'undefined') {
     throw new Error('Temporal is not available in this runtime');
   }
-  temporalConstructorToName = [
+  temporalNameToConstructor = [
     Temporal.Duration,
     Temporal.PlainDate,
     Temporal.PlainDateTime,
@@ -279,7 +279,7 @@ const getTemporalConstructors = () => {
     obj[ctor.name] = ctor;
     return obj;
   }, {});
-  return temporalConstructorToName;
+  return temporalNameToConstructor;
 };
 
 const temporalRule = compositeTransformation(
